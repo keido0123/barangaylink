@@ -9,7 +9,7 @@ use App\Http\Controllers\API\AnnouncementController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\ResidentController;
 
-// Public routes
+// Public routes - no auth needed
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // Admin protected routes
-Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
+Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('/logout', [AdminAuthController::class, 'logout']);
     Route::get('/profile', [AdminAuthController::class, 'profile']);
     Route::get('/dashboard', [DashboardController::class, 'adminStats']);
