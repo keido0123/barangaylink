@@ -44,7 +44,7 @@ export default function UserLogin() {
                 value={form.email}
                 onChange={e => setForm({...form, email: e.target.value})}
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="your@email.com"
+                placeholder="Enter your email"
                 required
               />
             </div>
