@@ -24,10 +24,14 @@ export default function LandingPage() {
         <header className="bg-white/10 backdrop-blur-sm border-b border-white/20 px-4 py-3">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">SC</div>
+            <img
+  src="/logo.png"
+  alt="Sta. Catalina Logo"
+  className="w-24 h-24 object-cover rounded-full mx-auto mb-4 drop-shadow-2xl border-4 border-white/50"
+/>
               <div>
                 <h1 className="text-white font-bold text-sm md:text-base">Barangay Sta. Catalina</h1>
-                <p className="text-white/70 text-xs">Olongapo City, Zambales</p>
+                <p className="text-white/70 text-xs">Lubao, Pampanga</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -40,7 +44,11 @@ export default function LandingPage() {
         {/* Hero */}
         <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 text-center">
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 md:p-10 max-w-2xl w-full">
-            <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">SC</div>
+           <img
+  src="/logo.png"
+  alt="Sta. Catalina Logo"
+  className="w-12 h-12 object-cover rounded-full drop-shadow-md border-2 border-white/50"
+/>
             <h2 className="text-white text-2xl md:text-4xl font-bold mb-2">Welcome to</h2>
             <h3 className="text-blue-300 text-xl md:text-3xl font-bold mb-4">Sta. Catalina E-Services</h3>
             <p className="text-white/80 text-sm md:text-base mb-8">Request barangay documents online, track your requests in real-time, and report community issues — all from the comfort of your home.</p>
@@ -87,7 +95,7 @@ export default function LandingPage() {
         </main>
 
         <footer className="text-center py-4 text-white/50 text-xs">
-          © 2026 Barangay Sta. Catalina, Olongapo City. All rights reserved.
+          © 2026 Barangay Sta. Catalina, Lubao Pampanga. All rights reserved.
         </footer>
       </div>
     </div>

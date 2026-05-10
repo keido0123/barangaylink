@@ -9,19 +9,54 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    const savedAdmin = localStorage.getItem('admin');
-    if (token && savedUser) setUser(JSON.parse(savedUser));
-    if (token && savedAdmin) setAdmin(JSON.parse(savedAdmin));
-    setLoading(false);
+    const initAuth = () => {
+      try {
+        const token = localStorage.getItem('token');
+        const savedAdmin = localStorage.getItem('admin');
+        const savedUser = localStorage.getItem('user');
+
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        // Check admin first
+        if (savedAdmin && savedAdmin !== 'undefined' && savedAdmin !== 'null') {
+          const parsedAdmin = JSON.parse(savedAdmin);
+          if (parsedAdmin && parsedAdmin.id) {
+            setAdmin(parsedAdmin);
+            setUser(null);
+            setLoading(false);
+            return;
+          }
+        }
+
+        // Then check user
+        if (savedUser && savedUser !== 'undefined' && savedUser !== 'null') {
+          const parsedUser = JSON.parse(savedUser);
+          if (parsedUser && parsedUser.id) {
+            setUser(parsedUser);
+            setAdmin(null);
+          }
+        }
+      } catch (e) {
+        console.error('Auth init error:', e);
+        localStorage.clear();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
   }, []);
 
   const loginUser = async (email, password) => {
     const res = await api.post('/login', { email, password });
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
+    localStorage.removeItem('admin');
     setUser(res.data.user);
+    setAdmin(null);
     return res.data;
   };
 
@@ -29,13 +64,19 @@ export function AuthProvider({ children }) {
     const res = await api.post('/admin/login', { email, password });
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('admin', JSON.stringify(res.data.admin));
+    localStorage.removeItem('user');
     setAdmin(res.data.admin);
+    setUser(null);
     return res.data;
   };
 
-  const logout = () => {
-    api.post('/logout').catch(() => {});
-    localStorage.clear();
+  const logout = async () => {
+    try {
+      await api.post('/logout');
+    } catch (e) {}
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('admin');
     setUser(null);
     setAdmin(null);
     window.location.href = '/';
@@ -43,7 +84,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ user, admin, loginUser, loginAdmin, logout, loading }}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 }

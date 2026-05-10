@@ -19,7 +19,7 @@ export default function UserLayout({ children }) {
       {/* Top Bar */}
       <header className="bg-blue-700 text-white px-4 py-3 flex items-center justify-between sticky top-0 z-40 shadow">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">SC</div>
+          <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-full object-cover" />
           <span className="font-semibold text-sm">Sta. Catalina</span>
         </div>
         <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export default function UserLayout({ children }) {
       {/* Sidebar for Desktop */}
       <aside className="hidden md:flex fixed left-0 top-0 h-full w-56 bg-blue-800 flex-col pt-16 z-30">
         <div className="p-4 border-b border-blue-700">
-          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mx-auto mb-2">SC</div>
+          <img src="/logo.png" alt="Logo" className="w-12 h-12 rounded-full object-cover mx-auto mb-2" />
           <p className="text-white text-center text-sm font-semibold">{user?.name}</p>
           <p className="text-blue-300 text-center text-xs">{user?.purok}</p>
         </div>

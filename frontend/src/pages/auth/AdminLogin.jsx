@@ -8,20 +8,20 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const { loginAdmin } = useAuth();
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await loginAdmin(form.email, form.password);
-      toast.success('Welcome, Official!');
-      navigate('/admin/dashboard');
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid credentials');
-    } finally {
-      setLoading(false);
-    }
-  };
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await loginAdmin(form.email, form.password);
+    toast.success('Welcome, Official!');
+    navigate('/admin/dashboard', { replace: true });
+  } catch (err) {
+    toast.error(err.response?.data?.message || 'Invalid credentials');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen relative flex items-center justify-center px-4">
@@ -31,7 +31,7 @@ export default function AdminLogin() {
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-gray-900/95 backdrop-blur rounded-2xl shadow-2xl p-8 border border-gray-700">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 rounded-full bg-yellow-600 flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">⚖️</div>
+            <img src="/logo.png" alt="Sta. Catalina Logo" className="w-14 h-14 rounded-full object-cover mx-auto mb-3" />
             <h2 className="text-2xl font-bold text-white">Official Login</h2>
             <p className="text-gray-400 text-sm">Barangay Sta. Catalina Admin Portal</p>
             <div className="mt-2 px-3 py-1 bg-yellow-600/20 border border-yellow-600/40 rounded-full inline-block">

@@ -49,7 +49,7 @@ export default function UserRegister() {
       <div className="relative z-10 max-w-2xl mx-auto">
         <div className="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 rounded-full bg-green-600 flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">SC</div>
+            <img src="/logo.png" alt="Sta. Catalina Logo" className="w-24 h-24 object-contain mx-auto mb-3" />
             <h2 className="text-2xl font-bold text-gray-800">Resident Registration</h2>
             <p className="text-gray-500 text-sm">Create your Barangay Sta. Catalina account</p>
           </div>

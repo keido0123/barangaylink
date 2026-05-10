@@ -18,7 +18,7 @@ return new class extends Migration
                 'Barangay Clearance',
                 'Certificate of Indigency',
                 'Certificate of Residency',
-                "Voter's Certificate"
+                "Voters Certificate"
             ]);
             $table->string('purpose');
             $table->enum('status', ['Pending', 'Processing', 'Ready', 'Released', 'Rejected'])->default('Pending');

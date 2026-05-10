@@ -31,7 +31,7 @@ export default function UserLogin() {
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-8">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">SC</div>
+           <img src="/logo.png" alt="Sta. Catalina Logo" className="w-14 h-14 rounded-full object-cover mx-auto mb-3" />
             <h2 className="text-2xl font-bold text-gray-800">Resident Login</h2>
             <p className="text-gray-500 text-sm">Barangay Sta. Catalina E-Services</p>
           </div>

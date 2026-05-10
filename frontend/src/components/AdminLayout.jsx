@@ -19,7 +19,7 @@ export default function AdminLayout({ children }) {
       {/* Sidebar */}
       <aside className="w-56 bg-gray-900 flex-col flex fixed h-full z-40">
         <div className="p-4 border-b border-gray-700 text-center">
-          <div className="w-10 h-10 rounded-full bg-yellow-600 flex items-center justify-center text-white font-bold mx-auto mb-2">⚖️</div>
+         <img src="/logo.png" alt="Logo" className="w-10 h-10 rounded-full object-cover mx-auto mb-2" />
           <p className="text-white text-sm font-semibold">{admin?.name}</p>
           <p className="text-yellow-400 text-xs">{admin?.role}</p>
         </div>
