@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '../utils/axios';
+import { useAuth } from '../context/AuthContext';
 
 export default function LandingPage() {
+  const { user, admin, loading: authLoading, logout } = useAuth();
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -34,9 +36,37 @@ export default function LandingPage() {
                 <p className="text-white/70 text-xs">Lubao, Pampanga</p>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Link to="/login" className="px-3 py-1.5 text-sm text-white border border-white/40 rounded-lg hover:bg-white/20 transition">Login</Link>
-              <Link to="/register" className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Register</Link>
+            <div className="flex gap-2 items-center">
+              {!authLoading && admin && (
+                <>
+                  <Link to="/admin/dashboard" className="px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">Admin</Link>
+                  <button
+                    type="button"
+                    onClick={() => logout()}
+                    className="px-3 py-1.5 text-sm bg-white/15 text-white rounded-lg hover:bg-white/25 transition"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!authLoading && !admin && user && (
+                <>
+                  <Link to="/dashboard" className="px-3 py-1.5 text-sm text-white border border-white/40 rounded-lg hover:bg-white/20 transition">Dashboard</Link>
+                  <button
+                    type="button"
+                    onClick={() => logout()}
+                    className="px-3 py-1.5 text-sm bg-white/15 text-white rounded-lg hover:bg-white/25 transition"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!authLoading && !user && !admin && (
+                <>
+                  <Link to="/login" className="px-3 py-1.5 text-sm text-white border border-white/40 rounded-lg hover:bg-white/20 transition">Login</Link>
+                  <Link to="/register" className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Register</Link>
+                </>
+              )}
             </div>
           </div>
         </header>
@@ -68,7 +98,13 @@ export default function LandingPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link to="/register" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Get Started</Link>
+              {user && !admin ? (
+                <Link to="/dashboard" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Go to Dashboard</Link>
+              ) : admin ? (
+                <Link to="/admin/dashboard" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Admin Dashboard</Link>
+              ) : (
+                <Link to="/register" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">Get Started</Link>
+              )}
               <Link to="/track" className="px-6 py-3 bg-white/20 text-white rounded-xl font-semibold hover:bg-white/30 transition">Track Request</Link>
             </div>
           </div>
