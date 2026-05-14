@@ -15,7 +15,7 @@ const handleSubmit = async (e) => {
   try {
     await loginAdmin(form.email, form.password);
     toast.success('Welcome, Official!');
-    navigate('/admin/dashboard', { replace: true });
+    queueMicrotask(() => navigate('/admin/dashboard', { replace: true }));
   } catch (err) {
     toast.error(err.response?.data?.message || 'Invalid credentials');
   } finally {

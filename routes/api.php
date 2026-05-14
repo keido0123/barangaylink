@@ -26,8 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/incidents', [IncidentReportController::class, 'index']);
 });
 
-// Admin protected routes
-Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
+// Admin protected routes — require Admin model (not resident User tokens)
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
     Route::post('/logout', [AdminAuthController::class, 'logout']);
     Route::get('/profile', [AdminAuthController::class, 'profile']);
     Route::get('/dashboard', [DashboardController::class, 'adminStats']);

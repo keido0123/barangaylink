@@ -50,13 +50,23 @@ export function AuthProvider({ children }) {
     initAuth();
   }, []);
 
+  const setUserSession = (userData, token) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.removeItem('admin');
+    setUser(userData);
+    setAdmin(null);
+  };
+
   const loginUser = async (email, password) => {
     const res = await api.post('/login', { email, password });
-    localStorage.setItem('token', res.data.token);
-    localStorage.setItem('user', JSON.stringify(res.data.user));
-    localStorage.removeItem('admin');
-    setUser(res.data.user);
-    setAdmin(null);
+    setUserSession(res.data.user, res.data.token);
+    return res.data;
+  };
+
+  const registerUser = async (form) => {
+    const res = await api.post('/register', form);
+    setUserSession(res.data.user, res.data.token);
     return res.data;
   };
 
@@ -72,7 +82,11 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await api.post('/logout');
+      if (admin) {
+        await api.post('/admin/logout');
+      } else {
+        await api.post('/logout');
+      }
     } catch (e) {}
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -83,7 +97,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, admin, loginUser, loginAdmin, logout, loading }}>
+    <AuthContext.Provider value={{ user, admin, loginUser, registerUser, loginAdmin, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

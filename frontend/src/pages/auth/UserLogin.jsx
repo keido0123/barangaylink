@@ -15,7 +15,7 @@ export default function UserLogin() {
     try {
       await loginUser(form.email, form.password);
       toast.success('Welcome back!');
-      navigate('/dashboard');
+      queueMicrotask(() => navigate('/dashboard', { replace: true }));
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
     } finally {

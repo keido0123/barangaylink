@@ -39,7 +39,8 @@ return [
 
     'guards' => [
     'web' => ['driver' => 'session', 'provider' => 'users'],
-    'sanctum' => ['driver' => 'sanctum', 'provider' => 'users'],
+    // Must be null so both User and Admin API tokens authenticate (see Sanctum Guard::hasValidProvider)
+    'sanctum' => ['driver' => 'sanctum', 'provider' => null],
     'admin' => ['driver' => 'session', 'provider' => 'admins'],
 ],
 

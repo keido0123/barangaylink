@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../utils/axios';
+import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const PUROKS = ['Purok 1','Purok 2','Purok 3','Purok 4','Purok 5','Purok 6','Purok 7','Purok 8'];
@@ -13,6 +13,7 @@ export default function UserRegister() {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { registerUser } = useAuth();
 
   const set = (k, v) => setForm(f => ({...f, [k]: v}));
 
@@ -24,11 +25,9 @@ export default function UserRegister() {
     }
     setLoading(true);
     try {
-      const res = await api.post('/register', form);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
+      await registerUser(form);
       toast.success('Registration successful! Welcome!');
-      navigate('/dashboard');
+      queueMicrotask(() => navigate('/dashboard', { replace: true }));
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) {
