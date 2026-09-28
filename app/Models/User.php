@@ -13,19 +13,22 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
-        'address',
-        'birthdate',
-        'gender',
-        'purok',
-        'civil_status',
-        'income_class',
-        'is_voter',
-        'is_verified',
-        'profile_photo',
+    'name',
+    'email',
+    'password',
+    'phone',
+    'address',
+    'birthdate',
+    'age',
+    'gender',
+    'purok',
+    'civil_status',
+    'mother_name',
+    'father_name',
+    'occupation',
+    'monthly_salary',
+    'income_class',
+    'is_voter',
     ];
 
     protected $hidden = [

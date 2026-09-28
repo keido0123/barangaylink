@@ -298,9 +298,13 @@ export default function UserRegister() {
     phone: '',
     address: '',
     birthdate: '',
+    age: '',
     gender: '',
     purok: '',
     civil_status: '',
+    mother_name: '',
+    father_name: '',
+    occupation: '',
     monthly_salary: '',
     income_class: '',
     is_voter: false
@@ -370,6 +374,38 @@ export default function UserRegister() {
   };
 
   // ====================================================
+  // AGE CALCULATOR
+  // ====================================================
+
+  const calculateAge = birthdate => {
+    if (!birthdate) return '';
+
+    const today = new Date();
+    const birth = new Date(`${birthdate}T00:00:00`);
+
+    if (Number.isNaN(birth.getTime()) || birth > today) {
+      return '';
+    }
+
+    let age = today.getFullYear() - birth.getFullYear();
+
+    const monthDifference =
+      today.getMonth() - birth.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (
+        monthDifference === 0 &&
+        today.getDate() < birth.getDate()
+      )
+    ) {
+      age--;
+    }
+
+    return age >= 0 ? age : '';
+  };
+
+  // ====================================================
   // SALARY HANDLER
   // ====================================================
 
@@ -433,9 +469,14 @@ export default function UserRegister() {
         updated.birthdate =
           merged.birthdate;
 
-        newlyFilled.birthdate = true;
+        updated.age = calculateAge(
+          merged.birthdate
+        );
 
-        count++;
+        newlyFilled.birthdate = true;
+        newlyFilled.age = true;
+
+        count += 2;
       }
 
       // ----------------------------------------------
@@ -1496,6 +1537,52 @@ export default function UserRegister() {
 
                 </div>
 
+                {/* MOTHER'S NAME */}
+                <div>
+
+                  <label className="block text-sm font-semibold text-[#2f3e2e] mb-2">
+                    Mother's Name *
+                  </label>
+
+                  <input
+                    type="text"
+                    value={form.mother_name}
+                    onChange={e =>
+                      setField(
+                        'mother_name',
+                        e.target.value
+                      )
+                    }
+                    className={input}
+                    placeholder="Mother's Full Name"
+                    required
+                  />
+
+                </div>
+
+                {/* FATHER'S NAME */}
+                <div>
+
+                  <label className="block text-sm font-semibold text-[#2f3e2e] mb-2">
+                    Father's Name *
+                  </label>
+
+                  <input
+                    type="text"
+                    value={form.father_name}
+                    onChange={e =>
+                      setField(
+                        'father_name',
+                        e.target.value
+                      )
+                    }
+                    className={input}
+                    placeholder="Father's Full Name"
+                    required
+                  />
+
+                </div>
+
                 {/* EMAIL */}
                 <div>
 
@@ -1656,16 +1743,43 @@ export default function UserRegister() {
                     value={
                       form.birthdate
                     }
-                    onChange={e =>
-                      setField(
-                        'birthdate',
-                        e.target.value
-                      )
-                    }
+                    onChange={e => {
+                      const birthdate = e.target.value;
+                      const age = calculateAge(birthdate);
+
+                      setForm(prev => ({
+                        ...prev,
+                        birthdate,
+                        age
+                      }));
+
+                      setAutoFilled(prev => ({
+                        ...prev,
+                        birthdate: false,
+                        age: false
+                      }));
+                    }}
                     className={afInput(
                       'birthdate'
                     )}
                     required
+                  />
+
+                </div>
+
+                {/* AGE */}
+                <div>
+
+                  <label className="block text-sm font-semibold text-[#2f3e2e] mb-2">
+                    Age
+                  </label>
+
+                  <input
+                    type="number"
+                    value={form.age}
+                    readOnly
+                    className={`${input} bg-gray-100 cursor-not-allowed`}
+                    placeholder="Automatically calculated"
                   />
 
                 </div>
@@ -1800,6 +1914,29 @@ export default function UserRegister() {
                       Separated
                     </option>
                   </select>
+
+                </div>
+
+                {/* OCCUPATION */}
+                <div>
+
+                  <label className="block text-sm font-semibold text-[#2f3e2e] mb-2">
+                    Occupation *
+                  </label>
+
+                  <input
+                    type="text"
+                    value={form.occupation}
+                    onChange={e =>
+                      setField(
+                        'occupation',
+                        e.target.value
+                      )
+                    }
+                    className={input}
+                    placeholder="e.g. Farmer, Teacher, Student"
+                    required
+                  />
 
                 </div>
 
